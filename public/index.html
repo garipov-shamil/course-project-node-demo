@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список кабелей</title>
+    <!-- Main -->
+    <script src="js/cables.js"></script>
+    <script src="js/pagination.js"></script>
+    <script src="js/filter.js"></script>
+    <!-- jQuery -->
+    <script src="jquery/dist/jquery.min.js"></script>
+    <!-- Chart.Js -->
+    <script src="chart.js/dist/Chart.js"></script>
+    <!-- Bootstrap CSS -->
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+<body onload="getCableList(0,10), getPageList(), getFileList(), distinctForFilter()" style="font-size: 11px" class="bg-light">
+<nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="index.html">Кабельный журнал</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Меню
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 200px">
+                    <a id="modal-714170" href="#modal-container-714170" role="button" class="dropdown-item"
+                       data-toggle="modal">Загрузка из файл</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#filterToolbar"
+                   id="navBarFilter" role="button"
+                   data-toggle="collapse"
+                   aria-haspopup="true" aria-expanded="false">
+                    Фильтры
+                </a>
+            </li>
+            <!--Аналитика -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#AnalyticToolbar"
+                   id="navBarAnalytics" role="button"
+                   data-toggle="collapse"
+                   aria-haspopup="true" aria-expanded="false">
+                    Аналитика
+                </a>
+            </li>
+        </ul>
+        <!--Поиск -->
+        <form class="form-inline my-2 my-lg-0">
+            <input id="cableIndex" class="form-control-sm mr-sm-2" type="search" placeholder="Введите индекс"
+                   aria-label="Search">
+            <button class="btn btn-sm align-middle btn-outline-secondary" type="button"
+                    onclick="searchCable(document.getElementById('cableIndex').value)">Найти
+            </button>
+        </form>
+    </div>
+</nav>
+
+<br>
+<br>
+<br>
+
+<!--Панель фильтров -->
+<div class="row justify-content-center p-2">
+<div class="collapse" id="filterToolbar">
+
+        <div class="card card-body bg-light p-2 ">
+            <nav class="navbar navbar-expand-sm navbar-light bg-light">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filterToolbarContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse p-2" id="filterToolbarContent">
+
+
+                    <div class="nav-item p-2 card card-body-sm bg-light" aria-labelledby="filterByReelNumberDropdown">
+                        <label for="checklistCableReel">Барабан:</label>
+                        <form id="checklistCableReel">
+                            <div class="col-xs-2 p-2 v-divider rounded bg-light">
+                                <ul name="checkboxCableReelList" id="distinctByCableReel"
+                                    class="list-unstyled scrollable">
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="nav-item p-2 card card-body-sm bg-light" aria-labelledby="filterByDocNumberDropdown">
+                        <label for="checklistCableDoc">Номер документа:</label>
+                        <form id="checklistCableDoc">
+                            <div class="col-xs-2 p-2 v-divider rounded bg-light">
+                                <ul name="checkboxCableDocList" id="distinctByCableDoc"
+                                    class="list-unstyled scrollable">
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="nav-item p-2 card card-body-sm bg-light" aria-labelledby="filterByDocNumberDropdown">
+                        <label for="checklistCableMark">Марка:</label>
+                        <form id="checklistCableMark">
+                            <div class="col-xs-2 p-2 v-divider rounded bg-light">
+                                <ul name="checkboxCableDocList" id="distinctByCableMark"
+                                    class="list-unstyled scrollable">
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="nav-item p-2 card card-body-sm bg-light" aria-labelledby="filterByCutNumberDropdown">
+                        <label for="checklistCableMark">Сечение:</label>
+                        <form id="checklistCableCut">
+                            <div class="col-xs-2 p-2 v-divider rounded bg-light">
+                                <ul name="checkboxCableCutList" id="distinctByCableCut"
+                                    class="list-unstyled scrollable">
+                                </ul>
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                    <div class="nav-item p-2" aria-labelledby="filterByCableAttributeAndStatus">
+                        <label for="checklistCableAttributes">Признак:</label>
+                        <form id="checklistCableAttributes">
+                            <div class="btn-group btn-group-toggle h-25 w-100" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="local" autocomplete="off"> Местный
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options" id="arterial" autocomplete="off"> Магистральный
+                                </label>
+                            </div>
+                        </form>
+                        <label for="checklistCableSliceStatus">Статус нарезки:</label>
+                        <form id="checklistCableSliceStatus">
+                            <div class="btn-group btn-group-toggle h-25 w-100" data-toggle="buttons">
+                                <label class="btn btn-secondary active">
+                                    <input type="radio" name="options" id="sliced" autocomplete="off"> Нарезан
+                                </label>
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="options" id="notSliced" autocomplete="off"> Не нарезан
+                                </label>
+                            </div>
+                        </form>
+                        <label for="checklistCablePullStatus">Статус затяжки:</label>
+                        <form id="checklistCablePullStatus">
+                            <div class="btn-group btn-group-toggle h-25 w-100" data-toggle="buttons">
+                                <label class="btn w-50 btn-light">
+                                    <input type="radio" name="options" id="pulled" autocomplete="off"> Затянут
+                                </label>
+                                <label class="btn w-50 btn-light">
+                                    <input type="radio" name="options" id="notPulled" autocomplete="off"> Не затянут
+                                </label>
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                </div>
+
+            </nav>
+            <div class="col-xs-2 pt-2 " align="center">
+                <button type="button" class="btn btn-secondary" onclick="filterSendJSON()">Применить</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--Панель аналитики-->
+
+<div class="collapse " id="AnalyticToolbar">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#AnalyticToolbarContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse p-2" id="AnalyticToolbarContent">
+
+            <div class="row w-100">
+                <div class="col-sm-6">
+                    <!--Диаграмма 1-->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Затяжка по дням</h5>
+                            <canvas id="sliceAndPullInformationChart" width="600" height="200"></canvas>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row justify-content-center">
+                                <label class="col-xs-2 col-form-label align-content-center"
+                                       for="pullStatusUpdateDateFrom">От</label>
+                                <div class="col-xs-4 mx-3">
+                                    <input type="date" value="" id="pullStatusUpdateDateFrom" onchange="changeDates()">
+                                </div>
+                                <label class="col-xs-2 col-form-label" for="pullStatusUpdateDateTo">До</label>
+                                <div class="col-xs-4 mx-3">
+                                    <input type="date" value="" id="pullStatusUpdateDateTo" onchange="changeDates()">
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+</div>
+
+
+<!-- Загрузка из файла -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal fade" id="modal-container-714170" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myModalLabel">
+                                Загрузка из *.CSV
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="getFileList"></div>
+                            <form method="POST" enctype="multipart/form-data" action="http://courseprojectdemo-env.eba-qa5pytn4.eu-central-1.elasticbeanstalk.com/">
+                                <input type="file" name="file"/>
+                                <input type="submit" value="Загрузить файл"/>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary"
+                                    onclick="document.location=document.getElementById('fileListSelect').value">
+                                Загрузить в журнал
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                Закрыть
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Таблица с кабелями -->
+<div class="row justify-content-center">
+    <div class="card">
+        <div class="card-body justify-content-center">
+            <div id="cables_table"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Панель пагинации -->
+<div class="row justify-content-center m-3">
+    <div id="pageable"></div>
+</div>
+
+<script src="js/charts.js"></script>
+</body>
+</html>

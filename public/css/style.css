@@ -1,0 +1,6 @@
+.list-unstyled.scrollable {
+    height: 200px;
+    max-height: 10em;
+    overflow-x: hidden;
+}
+
