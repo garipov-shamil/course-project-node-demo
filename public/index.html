@@ -8,18 +8,25 @@
     <script src="js/pagination.js"></script>
     <script src="js/filter.js"></script>
     <!-- jQuery -->
-    <script src="jquery/dist/jquery.min.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.5.1.min.js"
+            integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+            crossorigin="anonymous"></script>
     <!-- Chart.Js -->
-    <script src="chart.js/dist/Chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <!-- Bootstrap CSS -->
-    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <link rel="stylesheet" href="css/style.css">
 
 
 </head>
-<body onload="getCableList(0,10), getPageList(), getFileList(), distinctForFilter()" style="font-size: 11px" class="bg-light">
+<body onload="getCableList(0,10), getPageList(), getFileList(), distinctForFilter()" style="font-size: 11px"
+      class="bg-light">
 <nav class="navbar navbar-expand-sm navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="index.html">Кабельный журнал</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -75,7 +82,7 @@
 
 <!--Панель фильтров -->
 <div class="row justify-content-center p-2">
-<div class="collapse" id="filterToolbar">
+    <div class="collapse" id="filterToolbar">
 
         <div class="card card-body bg-light p-2 ">
             <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -248,7 +255,8 @@
                         </div>
                         <div class="modal-body">
                             <div id="getFileList"></div>
-                            <form method="POST" enctype="multipart/form-data" action="http://courseprojectdemo-env.eba-qa5pytn4.eu-central-1.elasticbeanstalk.com/">
+                            <form method="POST" enctype="multipart/form-data"
+                                  action="http://courseprojectdemo-env.eba-qa5pytn4.eu-central-1.elasticbeanstalk.com/">
                                 <input type="file" name="file"/>
                                 <input type="submit" value="Загрузить файл"/>
                             </form>
