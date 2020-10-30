@@ -1,28 +1,16 @@
-// // используем библиотеку express
-// const express = require('express');
-// // используем библиотеку для парсинга входящих запросов
-// const bodyParser = require('body-parser');
-// // создаем объект express (сервер для раздачи статики)
-// const app = express();
-// // говорим, что используем bodyParser
-// app.use(bodyParser.urlencoded({extended: true}));
-// // говорим, что мы раздаем папку public
-// app.use(express.static('public'));
-// // require('./app/routes')(app, pool);
-// const port = 5000;
-// // говорим, что запускаемся на порту 80
-// app.listen(port);
-//
-// console.log("Server started at 80");
-
+// используем библиотеку express
 const express = require('express');
+// используем библиотеку для парсинга входящих запросов
+const bodyParser = require('body-parser');
+// создаем объект express (сервер для раздачи статики)
 const app = express();
-
-app.get('/', (req, res) => {
-    res.send("Welcome!");
-});
-
+// говорим, что используем bodyParser
+app.use(bodyParser.urlencoded({extended: true}));
+// говорим, что мы раздаем папку public
+app.use(express.static('public'));
+// require('./app/routes')(app, pool);
 const port = process.env.port || 3000;
-app.listen(port, () => {
-    console.log("Hello!");
-})
+// говорим, что запускаемся на порту 80
+app.listen(port);
+
+console.log("Server started at 5000");
